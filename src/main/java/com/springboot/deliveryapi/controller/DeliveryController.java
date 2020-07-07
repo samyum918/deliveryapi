@@ -114,7 +114,7 @@ public class DeliveryController {
             throw new ApiBadRequestException("Page or limit is not a valid integer");
         }
         if(pageInt < 1) {
-            throw new ApiBadRequestException("Page must be greater than 1");
+            throw new ApiBadRequestException("Page must be greater than or equal to 1");
         }
 
         Pageable pageable = PageRequest.of(pageInt - 1, limitInt);
