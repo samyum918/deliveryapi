@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.maps.DistanceMatrixApi;
 import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.Unit;
@@ -17,6 +16,7 @@ import com.springboot.deliveryapi.exception.ApiResourceNotFoundException;
 import com.springboot.deliveryapi.model.Orders;
 import com.springboot.deliveryapi.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +30,9 @@ import java.util.logging.Logger;
 @RestController
 public class DeliveryController {
     private static Logger logger = Logger.getLogger(DeliveryController.class.getName());
+
+    @Value("${distance.matrix.api.key}")
+    private String API_KEY;
 
     @Autowired
     private OrdersRepository ordersRepository;
@@ -110,6 +113,9 @@ public class DeliveryController {
         catch (Exception ex) {
             throw new ApiBadRequestException("Page or limit is not a valid integer");
         }
+        if(pageInt < 1) {
+            throw new ApiBadRequestException("Page must be greater than 1");
+        }
 
         Pageable pageable = PageRequest.of(pageInt - 1, limitInt);
         Page<Orders> ordersList = ordersRepository.findAll(pageable);
@@ -134,8 +140,8 @@ public class DeliveryController {
 
     public long calculateDistance(LatLng originLatLng, LatLng destinationLatLng) throws Exception {
         GeoApiContext distCalcer = new GeoApiContext.Builder()
-                .apiKey("AIzaSyBC-HIlCwSjhC9rJyi944Gv2JNyT_-uzxM")
-                .build();
+                                                .apiKey(API_KEY)
+                                                .build();
 
         DistanceMatrixApiRequest req = DistanceMatrixApi.newRequest(distCalcer);
         DistanceMatrix result = req.origins(originLatLng)
