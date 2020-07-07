@@ -1,4 +1,4 @@
-package com.springboot.deliveryapi.controller.enums;
+package com.springboot.deliveryapi.model.enums;
 
 public enum Status {
     UNASSIGNED,

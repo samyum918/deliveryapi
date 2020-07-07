@@ -1,6 +1,6 @@
 package com.springboot.deliveryapi.model;
 
-import com.springboot.deliveryapi.controller.enums.Status;
+import com.springboot.deliveryapi.model.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,8 +19,8 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "distince")
-    private BigDecimal distince;
+    @Column(name = "distance")
+    private Integer distance;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
