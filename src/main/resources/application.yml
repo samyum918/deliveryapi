@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/delivery?serverTimezone=UTC
+    username: root
+    password:
+google:
+  distance-matrix:
+    api-key: AIzaSyAbsgt05rIsx_w-hsuzXXp_CA0StiZ1gI4

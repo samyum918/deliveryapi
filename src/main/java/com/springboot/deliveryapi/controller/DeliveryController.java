@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 public class DeliveryController {
     private static Logger logger = Logger.getLogger(DeliveryController.class.getName());
 
-    @Value("${distance.matrix.api.key}")
+    @Value("${google.distance-matrix.api-key}")
     private String API_KEY;
 
     @Autowired
