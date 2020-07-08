@@ -7,6 +7,8 @@ services:
       - 8080:8080
     depends_on:
       - db
+    environment:
+      MYSQL_HOST: db
     command: ["/wait-for-it.sh", "db:3306", "--", "java", "-jar", "app.jar"]
   db:
     container_name: db
