@@ -53,6 +53,7 @@ public class DeliveryController {
         LatLng destinationLatLng = validateAndGetLatLng(orderCoordination.getDestination().get(0), orderCoordination.getDestination().get(1));
 
         //Distance Matrix API
+        //e.g. 22.3352484,114.2046599/22.3263164,114.2045314
         Long distance = 0l;
         try {
             distance = calculateDistance(originLatLng, destinationLatLng);

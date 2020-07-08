@@ -51,7 +51,7 @@ public class DeliveryControllerTest {
                 "  ]\n" +
                 "}";
         MvcResult result = submitPlaceOrderRequest(requestBody);
-        assertEquals(result.getResponse().getStatus(), 400);
+        assertEquals(400, result.getResponse().getStatus());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class DeliveryControllerTest {
                 "  ]\n" +
                 "}";
         MvcResult result = submitPlaceOrderRequest(requestBody);
-        assertEquals(result.getResponse().getStatus(), 400);
+        assertEquals(400, result.getResponse().getStatus());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class DeliveryControllerTest {
                 "  ]\n" +
                 "}";
         MvcResult result = submitPlaceOrderRequest(requestBody);
-        assertEquals(result.getResponse().getStatus(), 400);
+        assertEquals(400, result.getResponse().getStatus());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class DeliveryControllerTest {
                 "  ]\n" +
                 "}";
         MvcResult result = submitPlaceOrderRequest(requestBody);
-        assertEquals(result.getResponse().getStatus(), 200);
+        assertEquals(200, result.getResponse().getStatus());
     }
 
 
@@ -115,7 +115,7 @@ public class DeliveryControllerTest {
         when(ordersRepository.findById(anyInt())).thenReturn(orderOpt);
 
         MvcResult result = submitTakeOrderRequest("1");
-        assertEquals(result.getResponse().getStatus(), 403);
+        assertEquals(403, result.getResponse().getStatus());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class DeliveryControllerTest {
 
         MvcResult result = submitTakeOrderRequest("1");
         System.out.println(result.getResponse().getContentAsString());
-        assertEquals(result.getResponse().getStatus(), 200);
+        assertEquals(200, result.getResponse().getStatus());
     }
 
 
@@ -140,13 +140,14 @@ public class DeliveryControllerTest {
     public void ordersList_whenPageLessThanOne_thenReturn400() throws Exception {
         setupOrdersListTest();
         MvcResult result = submitOrdersListRequest("0", "10");
-        assertEquals(result.getResponse().getStatus(), 400);
+        assertEquals(400, result.getResponse().getStatus());
     }
+
     @Test
     public void ordersList_whenLimitInvalid_thenReturn400() throws Exception {
         setupOrdersListTest();
         MvcResult result = submitOrdersListRequest("1", "abc");
-        assertEquals(result.getResponse().getStatus(), 400);
+        assertEquals(400, result.getResponse().getStatus());
     }
 
     @Test
@@ -154,7 +155,7 @@ public class DeliveryControllerTest {
         setupOrdersListTest();
         MvcResult result = submitOrdersListRequest("1", "10");
         System.out.println(result.getResponse().getContentAsString());
-        assertEquals(result.getResponse().getStatus(), 200);
+        assertEquals(200, result.getResponse().getStatus());
     }
 
 
