@@ -103,9 +103,10 @@ public class DeliveryController {
 
 
     @GetMapping("/orders")
-    public List<Orders> ordersList(@RequestParam("page") String page, @RequestParam("limit") String limit) {
-        Integer pageInt;
-        Integer limitInt;
+    public List<Orders> ordersList(@RequestParam(value = "page", required = false) String page,
+                                   @RequestParam(value = "limit", required = false) String limit) {
+        Integer pageInt = 1;
+        Integer limitInt = 10;
         try {
             pageInt = Integer.parseInt(page);
             limitInt = Integer.parseInt(limit);
