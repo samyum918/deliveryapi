@@ -8,4 +8,4 @@ spring:
     password:
 google:
   distance-matrix:
-    api-key: AIzaSyAbsgt05rIsx_w-hsuzXXp_CA0StiZ1gI4
+    api-key:
