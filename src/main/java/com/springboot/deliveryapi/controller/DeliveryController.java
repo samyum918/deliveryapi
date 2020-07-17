@@ -66,16 +66,8 @@ public class DeliveryController {
 
 
     @PatchMapping("/orders/{id}")
-    public ObjectNode takeOrder(@PathVariable String id) {
-        Integer idInt;
-        try {
-            idInt = Integer.parseInt(id);
-        }
-        catch (Exception ex) {
-            throw new ApiBadRequestException("Order ID is not a valid integer");
-        }
-
-        Optional<Orders> orderOpt = ordersRepository.findById(idInt);
+    public ObjectNode takeOrder(@PathVariable Integer id) {
+        Optional<Orders> orderOpt = ordersRepository.findById(id);
         Orders targetOrder;
         if(orderOpt.isPresent()) {
             targetOrder = orderOpt.get();
