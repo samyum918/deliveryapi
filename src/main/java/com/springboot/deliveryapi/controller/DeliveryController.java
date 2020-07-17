@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -41,14 +42,7 @@ public class DeliveryController {
     ObjectMapper objMapper;
 
     @PostMapping("/orders")
-    public Orders placeOrder(@RequestBody OrderCoordination orderCoordination) {
-        if(orderCoordination.getOrigin() == null || orderCoordination.getDestination() == null) {
-            throw new ApiBadRequestException("Origin or destination field is missing");
-        }
-        if(orderCoordination.getOrigin().size() != 2 || orderCoordination.getDestination().size() != 2) {
-            throw new ApiBadRequestException("Origin or destination is not a valid coordination");
-        }
-
+    public Orders placeOrder(@Valid @RequestBody OrderCoordination orderCoordination) {
         LatLng originLatLng = validateAndGetLatLng(orderCoordination.getOrigin().get(0), orderCoordination.getOrigin().get(1));
         LatLng destinationLatLng = validateAndGetLatLng(orderCoordination.getDestination().get(0), orderCoordination.getDestination().get(1));
 
@@ -90,7 +84,7 @@ public class DeliveryController {
             throw new ApiResourceNotFoundException("Order cannot be found");
         }
         if(targetOrder.getStatus() != Status.UNASSIGNED) {
-            throw new ApiForbiddenException("Order has been taken.");
+            throw new ApiForbiddenException("Order has been taken");
         }
 
         //update order
@@ -104,22 +98,13 @@ public class DeliveryController {
 
 
     @GetMapping("/orders")
-    public List<Orders> ordersList(@RequestParam(value = "page", required = false) String page,
-                                   @RequestParam(value = "limit", required = false) String limit) {
-        Integer pageInt = 1;
-        Integer limitInt = 10;
-        try {
-            pageInt = Integer.parseInt(page);
-            limitInt = Integer.parseInt(limit);
-        }
-        catch (Exception ex) {
-            throw new ApiBadRequestException("Page or limit is not a valid integer");
-        }
-        if(pageInt < 1) {
-            throw new ApiBadRequestException("Page must be greater than or equal to 1");
+    public List<Orders> ordersList(@RequestParam(defaultValue = "1", required = false) Integer page,
+                                   @RequestParam(defaultValue = "10", required = false) Integer limit) {
+        if(page < 1 || limit < 1) {
+            throw new ApiBadRequestException("Page and limit must be greater than or equal to 1");
         }
 
-        Pageable pageable = PageRequest.of(pageInt - 1, limitInt);
+        Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Orders> ordersList = ordersRepository.findAll(pageable);
         return ordersList.getContent();
     }
