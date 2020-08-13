@@ -3,7 +3,9 @@
 2. For Mac, run ./start.sh; For Windows, run start.bat (Maven is required)
 
 ### Tech Stack:
-Spring boot + junit 5 + mockito
+- Spring boot
+- junit 5
+- h2
 
 ### Logic of the API is in:
 - DeliveryController.java
