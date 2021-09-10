@@ -12,8 +12,16 @@ spring:
   h2:
     console:
       enabled: false
+
 server:
   port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 google:
   distance-matrix:
     api-key:
