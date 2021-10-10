@@ -25,8 +25,17 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_rules.yml:/etc/prometheus/rules/prometheus_rules.yml
     ports:
       - 9090:9090
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    restart: always
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - 9093:9093
   grafana:
     container_name: grafana
     image: grafana/grafana:latest
